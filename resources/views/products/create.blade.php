@@ -15,7 +15,8 @@
                     Crear Producto
                 </div>
                 <div class="card-body">
-                    <form action="">
+                    <form action="{{ route('products.store') }}" method="post">
+                    @csrf
                     <div class="form-group">
                         <label for="">Descripción:</label>
                         <input type="text" class="form-control" name="description">
