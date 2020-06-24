@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-</head>
-<body>
-<div class="container">    
+@extends('layouts.main')
+@section('contenido')
+
+<div class="container"><br>    
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -25,15 +19,20 @@
                         <thead>
                             <th>Descripción</th>
                             <th>Precio</th>
+                            <th>Acción</th>
                         </thead>
                         <tbody>
                             @foreach ($products as $product )
                             <tr>
+                                <td>{{ $product->description }}</td>
+                                <td>{{ $product->price }}</td>
                                 <td>
-                                    {{ $product->description }}
-                                </td>
-                                <td>
-                                    {{ $product->price }}
+                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                                    <a href="javascript: document.getElementById('delete-{{ $product->id }}').submit()" class="btn btn-danger btn-sm">Eliminar</a>
+                                    <form id="delete-{{ $product->id }}" action="{{ route('products.destroy', $product->id) }}" method="POST">
+                                        @method('delete')
+                                        @csrf
+                                    </form>
                                 </td>
                             </tr>
                         </tbody>
@@ -45,6 +44,4 @@
         </div>
     </div>
 </div>
-
-</body>
-</html>
+@endsection
