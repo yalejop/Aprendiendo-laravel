@@ -6,7 +6,8 @@ use App\Product;
 
 
 Route::get('products', function () {
-    return view('products.index');
+    $products = Product::orderBy('created_at','desc')->get();
+    return view('products.index', compact('products'));
 })->name('products.index');
 
 Route::get('products/create', function () {
@@ -19,6 +20,6 @@ Route::post('products', function (Request $request) {
      $newProduct->price = $request->input('price');
      $newProduct->save();
 
-     return redirect()->route('products.index');
+     return redirect()->route('products.index')->with('info', 'Producto creado Exitosamente');
 
-})->name('products.store');;
+})->name('products.store');
